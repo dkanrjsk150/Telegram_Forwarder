@@ -8,7 +8,7 @@ from telegram.update import Update
 from forwarder import FROM_CHATS, LOGGER, REMOVE_TAG, TO_CHATS, dispatcher
 
 
-def send_message(message: Message, chat_id: int) -> Union[MessageId, Message]:
+def telegram.Message.copy(message: Message, chat_id: int) -> Union[MessageId, Message]:
     if REMOVE_TAG:
         return message.copy(chat_id)
     return message.copy(chat_id)
@@ -27,9 +27,9 @@ def forward(update: Update, context: CallbackContext):
             context.bot.get_chat(chat).title or context.bot.get_chat(chat).first_name
         )
         try:
-            send_message(message, chat)
+            telegram.Message.copy(message, chat)
         except ChatMigrated as err:
-            send_message(message, err.new_chat_id)
+            telegram.Message.copy(message, err.new_chat_id)
             LOGGER.warning(f"Chat {chat} has been migrated to {err.new_chat_id}!! Edit the config file!!")
         except:
             LOGGER.exception(
